@@ -31,16 +31,17 @@ resource "azurerm_cognitive_account" "cognitive_service_openai" {
 # }
 
 resource "azapi_resource" "cognitive_service_openai_model_deployment" {
+  for_each  = var.cognitive_service_openai_model_configurations
   type      = "Microsoft.CognitiveServices/accounts/deployments@2022-12-01"
-  name      = "mymodel"
+  name      = each.value.display_name
   parent_id = azurerm_cognitive_account.cognitive_service.id
 
   body = jsonencode({
     properties = {
       model = {
         format  = "OpenAI"
-        name    = "text-ada-001"
-        version = "1"
+        name    = each.value.name
+        version = each.value.version
       }
       scaleSettings = {
         scaleType = "Standard"
