@@ -83,3 +83,13 @@ variable "private_dns_zone_id_cognitive_service_openai" {
     error_message = "Please specify a valid resource ID for the private DNS Zone."
   }
 }
+
+variable "cognitive_service_openai_model_configurations" {
+  description = "Specifies the configuration of models that should be deployed into the Open AI Cognitive Service."
+  type = list(object({
+    display_name = string
+    name         = string
+    version      = string
+  }))
+  sensitive = false
+}
